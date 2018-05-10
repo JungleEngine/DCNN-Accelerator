@@ -11,11 +11,11 @@ ENTITY DMA IS
 	READ_WINDOW: IN std_logic;
 	FILTER_ACK: OUT std_logic;
 	DATA_ACK: OUT std_logic;
-	result_write: IN std_logic;
 	save_result: IN std_logic
 	ram_address: out std_logic_vector(17 downto 0);
-	ram_data: INOUT std_logic_vector(39 downto 0)
-	);
+	cache_write_filter: out std_logic;
+	cache_write_window: out std_logic
+		);
 END DMA;
 
 
@@ -25,7 +25,7 @@ SIGNAL VCC: std_logic := '1';
 SIGNAL GND: std_logic := '0';
 
 SIGNAL NEW_RAM_ADDRESS: std_logic_vector(17 DOWNTO 0);
-SIGNAL RAM_ADDRESS_VALUE: std_logic_vector(15 DOWNTO 0);
+SIGNAL RAM_ADDRESS_VALUE: std_logic_vector(17 DOWNTO 0);
 
 SIGNAL COUNTERS_VALUE: std_logic_vector(15 DOWNTO 0);
 SIGNAL ROWS_COUNTER: std_logic_vector(7 DOWNTO 0);
@@ -43,16 +43,16 @@ SIGNAL SIG_DATA_ACK: std_logic;
 SIGNAL DATA_READ_ENABLE: std_logic;
 
 SIGNAL COUNTERS_RESET: std_logic;
-
+SIGNAL ram_address_result:std_logic_vector(17 downto 0);
 SIGNAL OUT_IMAGE_ADDRESS: std_logic_vector(17 downto 0):=(others<='0');
-
+SIGNAL 
 BEGIN
 
 
 	ram_address<=ram_address_result when(result_write='1')
-	else 
+	else NEW_RAM_ADDRESS;
 	out_address: ENTITY work.out_image_counter PORT MAP(
-		enable 	=> 	result_write,
+		enable 	=> 	save_result,
 		address => 	ram_address_result
 		);
 	--Address of outImage
@@ -66,7 +66,7 @@ BEGIN
 		Q => BUFFERED_SIGNALS
 	);
 
-	RAM_ADDRESS: ENTITY work.REG GENERIC MAP(n => 16) PORT MAP 
+	RAM_ADDRESS_REG: ENTITY work.REG GENERIC MAP(n => 18) PORT MAP 
 	(
 		D => NEW_RAM_ADDRESS,
 		EN => DATA_READ_ENABLE,
@@ -75,7 +75,7 @@ BEGIN
 		Q => RAM_ADDRESS_VALUE
 	);
 
-	COUNTER: ENTITY work.binary_counter PORT MAP 
+	COUNTER: ENTITY work.DMA_COUNTER PORT MAP 
 	(
 		CLK => CLK,
 		RST => COUNTERS_RESET,
@@ -84,7 +84,7 @@ BEGIN
 		Q => COUNTERS_VALUE
 	);	
 
-	RAR: ENTITY work.RAR PORT MAP 
+	RAR: ENTITY work.RAM_ADDRESS_RESOLVER PORT MAP 
 	( 
 		SIZE => SIZE,
 		READ_FILTER => SIG_READ_FILTER,
@@ -110,6 +110,9 @@ BEGIN
 
 	DATA_READ_ENABLE <= SIG_READ_FILTER or SIG_READ_WINDOW;
   
+  	cache_write_window <= SIG_READ_WINDOW;
+  	cache_write_filter <= SIG_READ_FILTER;
+
   COUNTERS_RESET <= '1' WHEN (RST = '1') or 
                              (SIG_FILTER_ACK = '1' and ROWS_COUNTER = "00000101" and SIZE  = '1') or 
                              (SIG_FILTER_ACK = '1' and ROWS_COUNTER = "00000011" and SIZE  = '0')

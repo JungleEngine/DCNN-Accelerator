@@ -4,7 +4,7 @@ USE IEEE.std_logic_1164.all;
 USE IEEE.numeric_std.all;
 USE IEEE.std_logic_signed.all;
 
-ENTITY binary_counter IS
+ENTITY DMA_COUNTER IS
 	PORT(
 	CLK: IN std_logic;
 	RST: IN std_logic;
@@ -12,9 +12,9 @@ ENTITY binary_counter IS
 	STRIDE: IN std_logic;
 	Q: OUT std_logic_vector(15 downto 0)
 	);
-END binary_counter;
+END DMA_COUNTER;
 
-ARCHITECTURE behavioural OF binary_counter IS
+ARCHITECTURE behavioural OF DMA_COUNTER IS
 
 SIGNAL COUNTER_VALUE: std_logic_vector(15 downto 0);
 

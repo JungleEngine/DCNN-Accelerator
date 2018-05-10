@@ -8,8 +8,8 @@ entity cache is
 	port (
 			clk				: in 	std_logic;
 			rst				: in 	std_logic;
-			shift			: in 	std_logic;
-			reading_filter	: in 	std_logic; --this is true if cache is reading the filter
+			filter_shift	: in 	std_logic;
+			window_shift	: in 	std_logic;
 			result_write 	: in 	std_logic;
 			result_in		: in 	std_logic_vector(7 downto 0);
 			result_out		: out 	std_logic_vector(7 downto 0);
@@ -34,8 +34,7 @@ signal window_shift : std_logic;
 
 begin
 
-	filter_shift <= shift AND reading_filter;
-	window_shift <= shift AND not (reading_filter);
+
 	filter_cache: ENTITY work.shift_registers PORT MAP(
 		clk 		=> 	clk,
 		rst 		=>	rst,
