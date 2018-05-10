@@ -1,1 +1,1 @@
-# DCNN-Accelerator-
+# Convolutional Neural Network Accelerator unit
