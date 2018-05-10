@@ -13,17 +13,17 @@ entity cache is
 			result_write 	: in 	std_logic;
 			result_in		: in 	std_logic_vector(7 downto 0);
 			result_out		: out 	std_logic_vector(7 downto 0);
-			serial_in 		: in 	std_logic_vector(39 downto 0);
-			filter_out_r0 	: out 	std_logic_vector(39 downto 0);
-			filter_out_r1 	: out 	std_logic_vector(39 downto 0);
-			filter_out_r2 	: out 	std_logic_vector(39 downto 0);
-			filter_out_r3 	: out 	std_logic_vector(39 downto 0);
-			filter_out_r4 	: out 	std_logic_vector(39 downto 0);
-			window_out_r0 	: out 	std_logic_vector(39 downto 0);
-			window_out_r1 	: out 	std_logic_vector(39 downto 0);
-			window_out_r2 	: out 	std_logic_vector(39 downto 0);
-			window_out_r3 	: out 	std_logic_vector(39 downto 0);
-			window_out_r4 	: out 	std_logic_vector(39 downto 0)
+			serial_in		: in 	std_logic_vector(39 downto 0);
+			filter_out_r0	: out 	std_logic_vector(39 downto 0);
+			filter_out_r1	: out 	std_logic_vector(39 downto 0);
+			filter_out_r2	: out 	std_logic_vector(39 downto 0);
+			filter_out_r3	: out 	std_logic_vector(39 downto 0);
+			filter_out_r4	: out 	std_logic_vector(39 downto 0);
+			window_out_r0	: out 	std_logic_vector(39 downto 0);
+			window_out_r1	: out 	std_logic_vector(39 downto 0);
+			window_out_r2	: out 	std_logic_vector(39 downto 0);
+			window_out_r3	: out 	std_logic_vector(39 downto 0);
+			window_out_r4	: out 	std_logic_vector(39 downto 0)
 		);
 end entity cache;
 

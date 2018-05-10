@@ -10,7 +10,11 @@ ENTITY DMA IS
 	READ_FILTER: IN std_logic;
 	READ_WINDOW: IN std_logic;
 	FILTER_ACK: OUT std_logic;
-	DATA_ACK: OUT std_logic
+	DATA_ACK: OUT std_logic;
+	result_write: IN std_logic;
+	save_result: IN std_logic
+	ram_address: out std_logic_vector(17 downto 0);
+	ram_data: INOUT std_logic_vector(39 downto 0)
 	);
 END DMA;
 
@@ -20,7 +24,7 @@ ARCHITECTURE DMA_ARCH OF DMA IS
 SIGNAL VCC: std_logic := '1';
 SIGNAL GND: std_logic := '0';
 
-SIGNAL NEW_RAM_ADDRESS: std_logic_vector(15 DOWNTO 0);
+SIGNAL NEW_RAM_ADDRESS: std_logic_vector(17 DOWNTO 0);
 SIGNAL RAM_ADDRESS_VALUE: std_logic_vector(15 DOWNTO 0);
 
 SIGNAL COUNTERS_VALUE: std_logic_vector(15 DOWNTO 0);
@@ -40,7 +44,18 @@ SIGNAL DATA_READ_ENABLE: std_logic;
 
 SIGNAL COUNTERS_RESET: std_logic;
 
+SIGNAL OUT_IMAGE_ADDRESS: std_logic_vector(17 downto 0):=(others<='0');
+
 BEGIN
+
+
+	ram_address<=ram_address_result when(result_write='1')
+	else 
+	out_address: ENTITY work.out_image_counter PORT MAP(
+		enable 	=> 	result_write,
+		address => 	ram_address_result
+		);
+	--Address of outImage
 
 	SIGNALS_BUFFER: ENTITY work.REG GENERIC MAP(n => 2) PORT MAP 
 	(
