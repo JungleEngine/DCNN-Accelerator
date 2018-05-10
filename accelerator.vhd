@@ -32,7 +32,9 @@ entity accelerator is
 
   		read_filter : out std_logic;
   		read_window : out std_logic;
-  		result : out std_logic_vector(7 downto 0)
+  		result : out std_logic_vector(7 downto 0);
+  		save_result : out std_logic;
+  		save_out_img_ram : out std_logic
 	  );
     
  end entity accelerator;
@@ -64,10 +66,10 @@ entity accelerator is
 
   begin 
   -- Cascaded adders.
-  	 adder_loop1: for i in 0 to 4 generate
-    	N_ADDER: entity work.Nadder generic map(n=>16)  port map 
-  		(sig_mul_output_r1, sig_mul_output_r1, sig_mul_output_r1,sig_mul_output_r1);
-	end generate;
+ -- 	 adder_loop1: for i in 0 to 4 generate
+ --   	N_ADDER: entity work.Nadder generic map(n=>16)  port map 
+ -- 		(sig_mul_output_r1, sig_mul_output_r1, sig_mul_output_r1,sig_mul_output_r1);
+	--end generate;
   
   counter : ENTITY work.counter PORT MAP (clock=>counter_clock, clr=>counter_clear, q=>counter_output);
 

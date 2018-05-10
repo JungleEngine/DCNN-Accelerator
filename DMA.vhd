@@ -7,11 +7,13 @@ ENTITY DMA IS
 	RST: IN std_logic;
 	SIZE: IN std_logic;
 	STRIDE: IN std_logic;
+	result_write: IN std_logic;
 	READ_FILTER: IN std_logic;
 	READ_WINDOW: IN std_logic;
 	FILTER_ACK: OUT std_logic;
 	DATA_ACK: OUT std_logic;
-	save_result: IN std_logic
+	save_out_img_ram: IN std_logic;
+	result_ack: out std_logic;
 	ram_address: out std_logic_vector(17 downto 0);
 	cache_write_filter: out std_logic;
 	cache_write_window: out std_logic
@@ -31,8 +33,8 @@ SIGNAL COUNTERS_VALUE: std_logic_vector(15 DOWNTO 0);
 SIGNAL ROWS_COUNTER: std_logic_vector(7 DOWNTO 0);
 SIGNAL COLS_COUNTER: std_logic_vector(7 DOWNTO 0);
 
-SIGNAL INPUT_SIGNALS: std_logic_vector(1 DOWNTO 0);
-SIGNAL BUFFERED_SIGNALS: std_logic_vector(1 DOWNTO 0);
+SIGNAL INPUT_SIGNALS: std_logic_vector(2 DOWNTO 0);
+SIGNAL BUFFERED_SIGNALS: std_logic_vector(2 DOWNTO 0);
 SIGNAL BUFFERED_READ_FILTER: std_logic;
 SIGNAL BUFFERED_READ_WINDOW: std_logic;
 SIGNAL SIG_READ_FILTER: std_logic; 
@@ -44,20 +46,19 @@ SIGNAL DATA_READ_ENABLE: std_logic;
 
 SIGNAL COUNTERS_RESET: std_logic;
 SIGNAL ram_address_result:std_logic_vector(17 downto 0);
-SIGNAL OUT_IMAGE_ADDRESS: std_logic_vector(17 downto 0):=(others<='0');
-SIGNAL 
+SIGNAL OUT_IMAGE_ADDRESS: std_logic_vector(17 downto 0):=(others=>'0');
 BEGIN
 
 
 	ram_address<=ram_address_result when(result_write='1')
 	else NEW_RAM_ADDRESS;
 	out_address: ENTITY work.out_image_counter PORT MAP(
-		enable 	=> 	save_result,
+		enable 	=> 	save_out_img_ram,
 		address => 	ram_address_result
 		);
 	--Address of outImage
 
-	SIGNALS_BUFFER: ENTITY work.REG GENERIC MAP(n => 2) PORT MAP 
+	SIGNALS_BUFFER: ENTITY work.REG GENERIC MAP(n => 3) PORT MAP 
 	(
 		D => INPUT_SIGNALS,
 		EN => VCC,
@@ -100,13 +101,13 @@ BEGIN
 	FILTER_ACK <= SIG_FILTER_ACK;
 	DATA_ACK <= SIG_DATA_ACK;
 
-	BUFFERED_READ_FILTER <= BUFFERED_SIGNALS(0);
-	BUFFERED_READ_WINDOW <= BUFFERED_SIGNALS(1);
-
+	BUFFERED_READ_FILTER<= BUFFERED_SIGNALS(0);
+	BUFFERED_READ_WINDOW<= BUFFERED_SIGNALS(1);
+	result_ack 			<= BUFFERED_SIGNALS(2);
 	SIG_READ_FILTER <= (READ_FILTER or BUFFERED_READ_FILTER) and (NOT SIG_FILTER_ACK);
 	SIG_READ_WINDOW <= (READ_WINDOW or BUFFERED_READ_WINDOW) and (NOT SIG_DATA_ACK);
 
-	INPUT_SIGNALS <= SIG_READ_WINDOW & SIG_READ_FILTER;
+	INPUT_SIGNALS <= save_out_img_ram& SIG_READ_WINDOW & SIG_READ_FILTER;
 
 	DATA_READ_ENABLE <= SIG_READ_FILTER or SIG_READ_WINDOW;
   

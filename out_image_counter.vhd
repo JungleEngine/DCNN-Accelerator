@@ -5,15 +5,15 @@ USE ieee.std_logic_signed.all;
 
 entity out_image_counter is
 	port (
-		enable 	:	std_logic;
-		address :	std_logic
+		enable 	: in	std_logic;
+		address : out	std_logic_vector(17 downto 0)
 	);
 end out_image_counter;
 
 
 architecture out_image_counter_arch of out_image_counter is
 
-signal addr:std_logic_vector(17 downto 0):=x"010000000000011001";--256*256 + 25
+signal addr:std_logic_vector(17 downto 0):="010000000000011001";--256*256 + 25
 begin
 	process(enable)
 	begin

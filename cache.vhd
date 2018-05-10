@@ -29,13 +29,10 @@ end entity cache;
 
 architecture cache_arch of cache is
 
-signal filter_shift : std_logic;
-signal window_shift : std_logic;
-
 begin
 
 
-	filter_cache: ENTITY work.shift_registers PORT MAP(
+	filter_cache: ENTITY work.shift_registers GENERIC MAP(n => 40)  PORT MAP(
 		clk 		=> 	clk,
 		rst 		=>	rst,
 		shift 		=>	filter_shift,
@@ -46,7 +43,7 @@ begin
 		row3_out	=>	filter_out_r3,
 		row4_out	=>	filter_out_r4
 	);
-	window_cache: ENTITY work.shift_registers PORT MAP(
+	window_cache: ENTITY work.shift_registers GENERIC MAP(n => 40)  PORT MAP(
 		clk 		=> 	clk,
 		rst 		=>	rst,
 		shift 		=>	window_shift,
@@ -57,7 +54,7 @@ begin
 		row3_out	=>	window_out_r3,
 		row4_out	=>	window_out_r4
 	);
-	result_cache: ENTITY work.REG PORT MAP(
+	result_cache: ENTITY work.REG GENERIC MAP(n => 8) PORT MAP(
 		D 		=>result_in, 
 		EN 		=>result_write,
 		CLK 	=>clk,
