@@ -12,11 +12,14 @@ end out_image_counter;
 
 
 architecture out_image_counter_arch of out_image_counter is
-
-signal addr:std_logic_vector(17 downto 0):="010000000000011001";--256*256 + 25
+signal sig_address: std_logic_vector(17 downto 0):="010000000000011001";--256*256 + 25
 begin
 	process(enable)
 	begin
-		address<=addr+1;
+	  IF(rising_edge(enable)) THEN
+		  sig_address <= sig_address + 1;
+		ELSE sig_address <= sig_address; 
+		END IF;
 	end process;
+	address <= sig_address;
 end out_image_counter_arch;
