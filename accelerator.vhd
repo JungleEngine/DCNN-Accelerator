@@ -91,6 +91,7 @@ entity accelerator is
   signal sig_ground : std_logic:='0';
 
   signal sig_buffer_output : std_logic_vector( 107 downto 0);
+  signal sig_adder_zeros : std_logic_vector(199 downto 0):=(others=>'0');
  
   -- all output
   begin 
@@ -101,7 +102,7 @@ entity accelerator is
 sig_adder_stage_4_input <= sig_adder_stage3_output & "000" & sig_multiplier_output(15 downto 0);
 
 
-sig_multiplier_output <= (399 downto 200 others =>'0') & window_row1 & window_row2 & 
+sig_multiplier_output <= sig_adder_zeros & window_row1 & window_row2 & 
 					      window_row3 & window_row4 & window_row5 when inst ='1'
 						else (sig_mul_output_r1 & 
 						sig_mul_output_r2 & 
