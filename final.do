@@ -1,4 +1,4 @@
-vsim -gui -t fs work.dcnn
+vsim -gui work.dcnn
 mem load -i C:/altera/12.1sp1/modelsim_ase/VLSI/ram.mem /dcnn/ram/RAM
 add wave -position end  sim:/dcnn/clk
 add wave -position end  sim:/dcnn/rst
@@ -7,7 +7,7 @@ add wave -position end  sim:/dcnn/inst
 add wave -position end  sim:/dcnn/size
 add wave -position end  sim:/dcnn/stride
 add wave -position end  sim:/dcnn/done
-force -freeze sim:/dcnn/clk 1 0, 0 {50 fs} -r 100
+force -freeze sim:/dcnn/clk 1 0, 0 {50 ps} -r 100
 force -freeze sim:/dcnn/rst 1 0
 force -freeze sim:/dcnn/start 0 0
 run
@@ -42,5 +42,5 @@ add wave -position end  sim:/dcnn/CACHE/window_out_r4
 add wave -position end  sim:/dcnn/CACHE/result_in
 add wave -position end  sim:/dcnn/CACHE/result_out
 run 2100
-run 76908500
-mem save -o C:/altera/12.1sp1/modelsim_ase/VLSI/result.mem -f mti -data symbolic -addr hex -startaddress 65562 -endaddress 129066 -wordsperline 1 /dcnn/ram/RAM
+run 76304000
+mem save -o C:/altera/12.1sp1/modelsim_ase/VLSI/result.mem -f mti -data unsigned -addr decimal -startaddress 65562 -endaddress 129066 -wordsperline 1 /dcnn/ram/RAM

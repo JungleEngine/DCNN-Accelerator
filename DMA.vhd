@@ -14,7 +14,7 @@ ENTITY DMA IS
 	DATA_ACK: OUT std_logic;
 	save_out_img_ram: IN std_logic;
 	result_ack: out std_logic;
-	done: out std_logic;
+	DONE: out std_logic;
 	ram_address: out std_logic_vector(17 downto 0);
 	cache_write_filter: out std_logic;
 	cache_write_window: out std_logic
@@ -43,11 +43,14 @@ SIGNAL SIG_READ_WINDOW: std_logic;
 SIGNAL SIG_FILTER_ACK: std_logic;
 SIGNAL SIG_DATA_ACK: std_logic;
 
+SIGNAL SIG_DONE: std_logic;
+
 SIGNAL DATA_READ_ENABLE: std_logic;
 
 SIGNAL COUNTERS_RESET: std_logic;
 SIGNAL ram_address_result:std_logic_vector(17 downto 0);
 SIGNAL OUT_IMAGE_ADDRESS: std_logic_vector(17 downto 0):=(others=>'0');
+
 BEGIN
 
 
@@ -106,10 +109,10 @@ BEGIN
 	BUFFERED_READ_FILTER<= BUFFERED_SIGNALS(0);
 	BUFFERED_READ_WINDOW<= BUFFERED_SIGNALS(1);
 	result_ack 			<= BUFFERED_SIGNALS(2);
-	SIG_READ_FILTER <= (READ_FILTER or BUFFERED_READ_FILTER) and (NOT SIG_FILTER_ACK);
-	SIG_READ_WINDOW <= (READ_WINDOW or BUFFERED_READ_WINDOW) and (NOT SIG_DATA_ACK);
+	SIG_READ_FILTER <= (READ_FILTER or BUFFERED_READ_FILTER) and (NOT SIG_FILTER_ACK) and (NOT SIG_DONE);
+	SIG_READ_WINDOW <= (READ_WINDOW or BUFFERED_READ_WINDOW) and (NOT SIG_DATA_ACK) and (NOT SIG_DONE);
 
-	INPUT_SIGNALS <= save_out_img_ram& SIG_READ_WINDOW & SIG_READ_FILTER;
+	INPUT_SIGNALS <= ( save_out_img_ram or SIG_DONE )& SIG_READ_WINDOW & SIG_READ_FILTER;
 
 	DATA_READ_ENABLE <= SIG_READ_FILTER or SIG_READ_WINDOW;
   
@@ -121,6 +124,12 @@ BEGIN
                              (SIG_FILTER_ACK = '1' and ROWS_COUNTER = "00000011" and SIZE  = '0')
   ELSE '0';
   
+  
+  SIG_DONE <= '1' when (BUFFERED_SIGNALS(2) = '1' and ROWS_COUNTER = "00000000" and ((COLS_COUNTER = "11111110" and SIZE = '0') or (COLS_COUNTER = "11111100" and SIZE = '1')))            
+  else '0';
+    
+  DONE <= SIG_DONE;
+    
 	PROCESS(CLK)
 	BEGIN
 		IF (rising_edge(CLK)) THEN
