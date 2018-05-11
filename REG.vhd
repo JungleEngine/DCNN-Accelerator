@@ -1,6 +1,5 @@
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
-
 ENTITY REG IS
 	GENERIC(N : integer := 32);
 		PORT( 
@@ -17,6 +16,7 @@ ARCHITECTURE REG_ARCH OF REG IS
 BEGIN
 	PROCESS(CLK, RST, EN)
 	BEGIN
+	  
 		IF(RST = '1') THEN
 			Q <= (others =>'0');
 			
