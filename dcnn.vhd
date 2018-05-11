@@ -45,7 +45,9 @@ signal window_out_r1 : std_logic_vector(39 downto 0);
 signal window_out_r2 : std_logic_vector(39 downto 0);
 signal window_out_r3 : std_logic_vector(39 downto 0);
 signal window_out_r4 : std_logic_vector(39 downto 0);
+signal done_sig:std_logic;
 begin
+	done<=done_sig;
 	DMA: ENTITY work.DMA PORT MAP(
 		CLK 				=>	clk,
 		RST 				=>	rst,
@@ -58,7 +60,7 @@ begin
 		DATA_ACK 			=> DATA_ACK,
 		save_out_img_ram	=> save_out_img_ram,
 		result_ack 			=> result_ack,
-		done        => done,
+		done        		=> done_sig,
 		ram_address 		=> ram_address,
 		cache_write_filter	=> cache_write_filter,
 		cache_write_window	=> cache_write_window

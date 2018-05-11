@@ -1,5 +1,12 @@
+<<<<<<< HEAD
+vsim -gui -t fs work.dcnn
+set StdArithNoWarnings 1
+set NumericStdNoWarnings 1
+mem load -i ramFilling/ram.mem /dcnn/ram/RAM
+=======
 vsim -gui work.dcnn
 mem load -i C:/altera/12.1sp1/modelsim_ase/VLSI/ram.mem /dcnn/ram/RAM
+>>>>>>> 73c25e58cddae498c6ba80c419b0badd4d9c2520
 add wave -position end  sim:/dcnn/clk
 add wave -position end  sim:/dcnn/rst
 add wave -position end  sim:/dcnn/start
@@ -42,5 +49,5 @@ add wave -position end  sim:/dcnn/CACHE/window_out_r4
 add wave -position end  sim:/dcnn/CACHE/result_in
 add wave -position end  sim:/dcnn/CACHE/result_out
 run 2100
-run 76304000
-mem save -o C:/altera/12.1sp1/modelsim_ase/VLSI/result.mem -f mti -data unsigned -addr decimal -startaddress 65562 -endaddress 129066 -wordsperline 1 /dcnn/ram/RAM
+run 76908500
+mem save -o result.mem -f mti -data unsigned -addr dec -startaddress 65562 -endaddress 129065 -wordsperline 1 /dcnn/ram/RAM
