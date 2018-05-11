@@ -1,7 +1,7 @@
 vsim -gui -t fs work.dcnn
 set StdArithNoWarnings 1
 set NumericStdNoWarnings 1
-mem load -i ramFilling/ram.mem /dcnn/ram/RAM
+mem load -i ramFilling/ram1.mem /dcnn/ram/RAM
 add wave -position end  sim:/dcnn/clk
 add wave -position end  sim:/dcnn/rst
 add wave -position end  sim:/dcnn/start
