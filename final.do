@@ -9,7 +9,7 @@ add wave -position end  sim:/dcnn/inst
 add wave -position end  sim:/dcnn/size
 add wave -position end  sim:/dcnn/stride
 add wave -position end  sim:/dcnn/done
-force -freeze sim:/dcnn/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/dcnn/clk 1 0, 0 {50 fs} -r 100
 force -freeze sim:/dcnn/rst 1 0
 force -freeze sim:/dcnn/start 0 0
 run
