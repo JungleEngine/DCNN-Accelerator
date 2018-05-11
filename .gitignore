@@ -12,7 +12,9 @@
 *.html
 *.bsf
 *.mpf
-
+work/
+work/*
+work
 # ignore simulation output of ModelSim
 wlf*
 *.wlf
