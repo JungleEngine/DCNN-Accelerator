@@ -32,6 +32,7 @@ signal cache_write_window:std_logic;
 signal cache_write_result:std_logic;
 signal save_out_img_ram:std_logic;
 signal result_ack:std_logic;
+signal cache_serial_data: std_logic_vector(39 downto 0);
 signal cache_result_value_in:std_logic_vector(7 downto 0);
 signal cache_result_value_out:std_logic_vector(7 downto 0);
 signal filter_out_r0 : std_logic_vector(39 downto 0);
@@ -72,7 +73,7 @@ begin
 			result_write 	=>	cache_write_result, --from accelerator
 			result_in		=>	cache_result_value_in,
 			result_out		=>	cache_result_value_out,
-			serial_in		=>	ram_data_bus,
+			serial_in		=>	cache_serial_data,
 			filter_out_r0	=>	filter_out_r0,
 			filter_out_r1	=>	filter_out_r1,
 			filter_out_r2	=>	filter_out_r2,
@@ -120,4 +121,7 @@ begin
 		DATA_OUT 			=>ram_data_bus
 	);
 	
+	cache_serial_data <= ram_data_bus when size = '1'
+	else ram_data_bus(39 downto 10) & ("0000000000");
+	  
 end dcnn_arch;

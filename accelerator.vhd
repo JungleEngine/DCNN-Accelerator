@@ -6,6 +6,11 @@ USE ieee.std_logic_signed.all;
 
 entity accelerator is 
   
+
+
+-- inst = 1 => pooling
+-- size = 1 => 5*5 filter
+
   port(
 
   		clk : in std_logic;
@@ -86,6 +91,7 @@ entity accelerator is
   signal sig_ground : std_logic:='0';
 
   signal sig_buffer_output : std_logic_vector( 107 downto 0);
+  signal sig_adder_zeros : std_logic_vector(199 downto 0):=(others=>'0');
  
   -- all output
   begin 
@@ -95,7 +101,9 @@ entity accelerator is
 
 sig_adder_stage_4_input <= sig_adder_stage3_output & "000" & sig_multiplier_output(15 downto 0);
 
-sig_multiplier_output <= (others =>'0') when inst ='1'
+
+sig_multiplier_output <= sig_adder_zeros & window_row1 & window_row2 & 
+					      window_row3 & window_row4 & window_row5 when inst ='1'
 						else (sig_mul_output_r1 & 
 						sig_mul_output_r2 & 
 						sig_mul_output_r3 &
@@ -271,17 +279,18 @@ begin
 		counter_clear <= '0';
 	end if;
 
-	if(counter_output = "1001") then
+
+	if((counter_output = "1001" and inst = '0') or (counter_output = "0001" and inst = '1')) then
 	sig_multipliers_enable <='0';
 	end if;
 
-	if(counter_output = "1001") then
+	if((counter_output = "1001" and inst = '0') or (counter_output = "0001" and inst = '1')) then
 	cache_write<='1';
 	else 
 	cache_write <='0';
 	end if;
 
-	if(counter_output = "1010") then
+	if((counter_output = "1010" and inst = '0') or (counter_output = "0010" and inst = '1')) then
 	save_result<='1';
 	else 
 	save_result <='0';
