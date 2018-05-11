@@ -35,6 +35,7 @@ entity accelerator is
   		cache_write : out std_logic;
   		save_result : out std_logic;
   		result : out std_logic_vector(7 downto 0)
+
 	  );
     
  end entity accelerator;
@@ -178,6 +179,7 @@ testing_adders <= sig_mul_output_r1(79 downto 64) + sig_mul_output_r2(79 downto 
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
+
   counter : ENTITY work.counter PORT MAP (clock=>counter_clock, clr=>counter_clear, q=>counter_output);
 
   -- generate 5 rows.
