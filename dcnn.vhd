@@ -12,7 +12,7 @@ entity dcnn is
 		inst 		: in 	std_logic;
 		size 		: in 	std_logic;
 		stride 		: in 	std_logic;
-		done 		: in 	std_logic;
+		done 		: out 	std_logic;
 		ram_data_bus: INOUT std_logic_vector(39 downto 0)
 
 	);
@@ -26,6 +26,7 @@ signal READ_WINDOW:std_logic;
 signal FILTER_ACK:std_logic;
 signal DATA_ACK:std_logic;
 signal save_result:std_logic;
+signal done: std_logic;
 signal ram_address:std_logic_vector(17 downto 0);
 signal cache_write_filter:std_logic;
 signal cache_write_window:std_logic;
@@ -51,13 +52,13 @@ begin
 		size 				=>	size,
 		STRIDE 				=> 	stride,
 		result_write		=> save_out_img_ram,
-
 		READ_FILTER			=>	READ_FILTER,
 		READ_WINDOW			=>	READ_WINDOW,
 		FILTER_ACK 			=> 	FILTER_ACK,
 		DATA_ACK 			=> DATA_ACK,
 		save_out_img_ram	=> save_out_img_ram,
 		result_ack 			=> result_ack,
+		done        => done,
 		ram_address 		=> ram_address,
 		cache_write_filter	=> cache_write_filter,
 		cache_write_window	=> cache_write_window
@@ -82,6 +83,7 @@ begin
 			window_out_r3	=>	window_out_r3,
 			window_out_r4	=>	window_out_r4
 	);
+	
 	accelerator: ENTITY work.accelerator port map (
 	
 		clk 			 	=>	clk,
@@ -116,4 +118,5 @@ begin
 		DATA_IN 			=>cache_result_value_out,
 		DATA_OUT 			=>ram_data_bus
 	);
+	
 end dcnn_arch;
