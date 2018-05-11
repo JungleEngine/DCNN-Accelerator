@@ -12,7 +12,7 @@ entity dcnn is
 		inst 		: in 	std_logic;
 		size 		: in 	std_logic;
 		stride 		: in 	std_logic;
-		done 		: in 	std_logic;
+		done 		: out 	std_logic;
 		ram_data_bus: INOUT std_logic_vector(39 downto 0)
 
 	);
@@ -44,20 +44,22 @@ signal window_out_r1 : std_logic_vector(39 downto 0);
 signal window_out_r2 : std_logic_vector(39 downto 0);
 signal window_out_r3 : std_logic_vector(39 downto 0);
 signal window_out_r4 : std_logic_vector(39 downto 0);
+signal done_sig:std_logic;
 begin
+	done<=done_sig;
 	DMA: ENTITY work.DMA PORT MAP(
 		CLK 				=>	clk,
 		RST 				=>	rst,
 		size 				=>	size,
 		STRIDE 				=> 	stride,
 		result_write		=> save_out_img_ram,
-
 		READ_FILTER			=>	READ_FILTER,
 		READ_WINDOW			=>	READ_WINDOW,
 		FILTER_ACK 			=> 	FILTER_ACK,
 		DATA_ACK 			=> DATA_ACK,
 		save_out_img_ram	=> save_out_img_ram,
 		result_ack 			=> result_ack,
+		done        		=> done_sig,
 		ram_address 		=> ram_address,
 		cache_write_filter	=> cache_write_filter,
 		cache_write_window	=> cache_write_window
@@ -82,12 +84,14 @@ begin
 			window_out_r3	=>	window_out_r3,
 			window_out_r4	=>	window_out_r4
 	);
+	
 	accelerator: ENTITY work.accelerator port map (
 	
 		clk 			 	=>	clk,
 		start  				=>	start,
 		size  				=>	size,
 		stride  			=>	stride,
+		inst 				=> 	inst,
 		filter_ack  		=>	filter_ack,
 		data_ack  			=>	data_ack,
 		result_ack  		=>	result_ack,
@@ -104,8 +108,8 @@ begin
 		read_filter			=>	read_filter,
 		read_window			=>	read_window,
 		result				=>	cache_result_value_in,
-		save_result 		=> 	cache_write_result,
-		save_out_img_ram  	=> 	save_out_img_ram
+		cache_write 		=> 	cache_write_result,
+		save_result  		=> 	save_out_img_ram
 	);
 
 	ram: ENTITY work.ram port map(
@@ -115,4 +119,5 @@ begin
 		DATA_IN 			=>cache_result_value_out,
 		DATA_OUT 			=>ram_data_bus
 	);
+	
 end dcnn_arch;

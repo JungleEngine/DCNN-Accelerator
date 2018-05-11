@@ -20,9 +20,10 @@ BEGIN
 		IF(RST = '1') THEN
 			Q <= (others =>'0');
 			
-		ELSIF rising_edge(CLK) and EN = '1' THEN
-		 	Q <= D;
-		 	
+		ELSIF rising_edge(CLK)  THEN     
+			IF EN = '1' THEN
+		 		Q <= D;
+		 	END IF;
 		END IF;
 	END PROCESS;
 END REG_ARCH;

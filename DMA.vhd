@@ -14,6 +14,7 @@ ENTITY DMA IS
 	DATA_ACK: OUT std_logic;
 	save_out_img_ram: IN std_logic;
 	result_ack: out std_logic;
+	done: out std_logic;
 	ram_address: out std_logic_vector(17 downto 0);
 	cache_write_filter: out std_logic;
 	cache_write_window: out std_logic
@@ -52,6 +53,7 @@ BEGIN
 
 	ram_address<=ram_address_result when(result_write='1')
 	else NEW_RAM_ADDRESS;
+	  
 	out_address: ENTITY work.out_image_counter PORT MAP(
 		enable 	=> 	save_out_img_ram,
 		address => 	ram_address_result
