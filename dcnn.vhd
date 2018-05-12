@@ -122,6 +122,6 @@ begin
 	);
 	
 	cache_serial_data <= ram_data_bus when size = '1'
-	else ram_data_bus(39 downto 10) & ("0000000000");
+	else ram_data_bus(23 downto 0) & (x"0000");
 	  
 end dcnn_arch;

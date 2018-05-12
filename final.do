@@ -9,6 +9,7 @@ mem load -i ramFilling/ram2.mem /dcnn/ram/RAM
 #add wave -position end  sim:/dcnn/size
 #add wave -position end  sim:/dcnn/stride
 #add wave -position end  sim:/dcnn/done
+
 force -freeze sim:/dcnn/clk 1 0, 0 {50 ps} -r 100
 force -freeze sim:/dcnn/rst 1 0
 force -freeze sim:/dcnn/start 0 0
@@ -43,6 +44,9 @@ force -freeze sim:/dcnn/stride 0 0
 #add wave -position end  sim:/dcnn/CACHE/window_out_r4
 #add wave -position end  sim:/dcnn/CACHE/result_in
 #add wave -position end  sim:/dcnn/CACHE/result_out
+
+run
+force -freeze sim:/dcnn/start 0 0
 run 2100
-run 76908500
-mem save -o result.mem -f mti -data unsigned -addr dec -startaddress 65562 -endaddress 129065 -wordsperline 1 /dcnn/ram/RAM
+#run 76908500
+#mem save -o result.mem -f mti -data unsigned -addr dec -startaddress 65562 -endaddress 129065 -wordsperline 1 /dcnn/ram/RAM

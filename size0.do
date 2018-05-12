@@ -17,6 +17,7 @@ add wave -position end  sim:/dma/BUFFERED_READ_WINDOW
 add wave -position end  sim:/dma/SIG_READ_FILTER
 add wave -position end  sim:/dma/SIG_READ_WINDOW
 add wave -position end  sim:/dma/DATA_READ_ENABLE
+add wave -position end  sim:/dma/COUNTERS_RESET
 force -freeze sim:/dma/CLK 1 0, 0 {50 ps} -r 100
 force -freeze sim:/dma/RST 1 0
 force -freeze sim:/dma/SIZE 0 0
