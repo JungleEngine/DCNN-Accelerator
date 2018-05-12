@@ -91,7 +91,7 @@ entity accelerator is
   signal sig_ground : std_logic:='0';
 
   signal sig_buffer_output : std_logic_vector( 107 downto 0);
-  signal sig_adder_zeros : std_logic_vector(199 downto 0):=(others=>'0');
+
  
   -- all output
   begin 
@@ -102,8 +102,36 @@ entity accelerator is
 sig_adder_stage_4_input <= sig_adder_stage3_output & "000" & sig_multiplier_output(15 downto 0);
 
 
-sig_multiplier_output <= sig_adder_zeros & window_row1 & window_row2 & 
-					      window_row3 & window_row4 & window_row5 when inst ='1'
+sig_multiplier_output <= 	(x"00")&window_row1(7 downto 0)&
+							(x"00")&window_row1(15 downto 8)&
+							(x"00")&window_row1(23 downto 16)&
+							(x"00")&window_row1(31 downto 24)&
+							(x"00")&window_row1(39 downto 32)&
+							
+							(x"00")&window_row2(7 downto 0)&
+							(x"00")&window_row2(15 downto 8)&
+							(x"00")&window_row2(23 downto 16)&
+							(x"00")&window_row2(31 downto 24)&
+							(x"00")&window_row2(39 downto 32)&
+
+							(x"00")&window_row3(7 downto 0)&
+							(x"00")&window_row3(15 downto 8)&
+							(x"00")&window_row3(23 downto 16)&
+							(x"00")&window_row3(31 downto 24)&
+							(x"00")&window_row3(39 downto 32)&
+
+							(x"00")&window_row4(7 downto 0)&
+							(x"00")&window_row4(15 downto 8)&
+							(x"00")&window_row4(23 downto 16)&
+							(x"00")&window_row4(31 downto 24)&
+							(x"00")&window_row4(39 downto 32)&
+
+							(x"00")&window_row5(7 downto 0)&
+							(x"00")&window_row5(15 downto 8)&
+							(x"00")&window_row5(23 downto 16)&
+							(x"00")&window_row5(31 downto 24)&
+							(x"00")&window_row5(39 downto 32)
+						 when inst ='1'	
 						else (sig_mul_output_r1 & 
 						sig_mul_output_r2 & 
 						sig_mul_output_r3 &
