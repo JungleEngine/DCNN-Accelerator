@@ -107,7 +107,7 @@ sig_multiplier_output <= 	(x"00")&window_row1(7 downto 0)&
 							(x"00")&window_row1(23 downto 16)&
 							(x"00")&window_row1(31 downto 24)&
 							(x"00")&window_row1(39 downto 32)&
-							
+
 							(x"00")&window_row2(7 downto 0)&
 							(x"00")&window_row2(15 downto 8)&
 							(x"00")&window_row2(23 downto 16)&
@@ -207,8 +207,8 @@ testing_adders <= sig_mul_output_r1(79 downto 64) + sig_mul_output_r2(79 downto 
 --------------------------------------------------------------------------------
  -- result 
 
- result <= sig_adder_stage5_output(10 downto 3) when size ='0'
- 		else sig_adder_stage5_output(12 downto 5);
+ result <= sig_adder_stage5_output(11 downto 4) when size ='0'
+ 		else sig_adder_stage5_output(13 downto 6);
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -225,8 +225,8 @@ testing_adders <= sig_mul_output_r1(79 downto 64) + sig_mul_output_r2(79 downto 
 		clk => clk,
 		enable => sig_multipliers_enable,
 		start => sig_multipliers_start,
-		op1 => filter_row1(39- i *8 downto 39- i*8-7),
-		op2 => window_row1(39- i *8 downto 39- i*8-7),
+		op1 => window_row1(39- i *8 downto 39- i*8-7),
+		op2 => filter_row1(39- i *8 downto 39- i*8-7),
 		result => sig_mul_output_r1(79 - i*16 downto 79- i*16 - 15)
 				);
     end generate;
@@ -237,8 +237,8 @@ testing_adders <= sig_mul_output_r1(79 downto 64) + sig_mul_output_r2(79 downto 
 		clk => clk,
 		enable => sig_multipliers_enable,
 		start => sig_multipliers_start,
-		op1 => filter_row2(39- i *8 downto 39- i*8-7),
-		op2 => window_row2(39- i *8 downto 39- i*8-7),
+		op1 => window_row2(39- i *8 downto 39- i*8-7),
+		op2 => filter_row2(39- i *8 downto 39- i*8-7),
 		result => sig_mul_output_r2(79 - i*16 downto 79- i*16 - 15)
 				);
     end generate;
@@ -249,8 +249,8 @@ testing_adders <= sig_mul_output_r1(79 downto 64) + sig_mul_output_r2(79 downto 
 		clk => clk,
 		enable =>sig_multipliers_enable,
 		start => sig_multipliers_start,
-		op1 => filter_row3(39- i *8 downto 39- i*8-7),
-		op2 => window_row3(39- i *8 downto 39- i*8-7),
+		op1 => window_row3(39- i *8 downto 39- i*8-7),
+		op2 => filter_row3(39- i *8 downto 39- i*8-7),
 		result => sig_mul_output_r3(79 - i*16 downto 79- i*16 - 15)
 				);
     end generate;
@@ -262,8 +262,8 @@ testing_adders <= sig_mul_output_r1(79 downto 64) + sig_mul_output_r2(79 downto 
 		clk => clk,
 		enable => sig_multipliers_enable,
 		start => sig_multipliers_start,
-		op1 => filter_row4(39- i *8 downto 39- i*8-7),
-		op2 => window_row4(39- i *8 downto 39- i*8-7),
+		op1 => window_row4(39- i *8 downto 39- i*8-7),
+		op2 => filter_row4(39- i *8 downto 39- i*8-7),
 		result => sig_mul_output_r4(79 - i*16 downto 79- i*16 - 15)
 				);
     end generate;
@@ -275,8 +275,8 @@ testing_adders <= sig_mul_output_r1(79 downto 64) + sig_mul_output_r2(79 downto 
 		clk => clk,
 		enable =>sig_multipliers_enable,
 		start => sig_multipliers_start,
-		op1 => filter_row5(39- i *8 downto 39- i*8-7),
-		op2 => window_row5(39- i *8 downto 39- i*8-7),
+		op1 => window_row5(39- i *8 downto 39- i*8-7),
+		op2 => filter_row5(39- i *8 downto 39- i*8-7),
 		result => sig_mul_output_r5(79 - i*16 downto 79- i*16 - 15)
 				);
     end generate;
