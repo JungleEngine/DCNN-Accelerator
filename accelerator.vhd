@@ -286,25 +286,33 @@ read_window <= sig_read_window;
 process(start, clk, filter_ack, result_ack, sig_multipliers_start, data_ack,counter_output)
 
 begin
-	if(rising_edge(filter_ack) or rising_edge(result_ack)) then
-		read_filter <= '0';
-		sig_read_window <='1';
+
+	if (falling_edge(clk)) then
+	if (sig_multipliers_start = '1') then
+		sig_multipliers_start <= '0';
+		counter_clear <= '0';
+	end if;
 	end if;
 
-	if(rising_edge(start)) then
+	if(filter_ack = '1') then
+		read_filter <= '0';
+		sig_read_window <= '1';
+	end if;
+
+	if(result_ack = '1') then
+		read_filter <= '0';
+		sig_read_window <= '1';
+	end if;
+
+	if(start = '1') then
 		read_filter <= '1';		
 	end if;
 
-	if(rising_edge(data_ack)) then
+	if(data_ack = '1') then
 		sig_read_window <='0';
 		counter_clear <= '1';
 		sig_multipliers_start <='1';
 		sig_multipliers_enable <= '1';
-	end if;
-
-	if(sig_multipliers_start ='1' and falling_edge(clk)) then
-		sig_multipliers_start <='0';
-		counter_clear <= '0';
 	end if;
 
 
@@ -327,8 +335,4 @@ begin
 
 end process;
   end arch;
-
-
-
-
 
