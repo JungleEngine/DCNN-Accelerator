@@ -3,7 +3,7 @@ import numpy as np
 im = cv2.imread("cameraman.png")
 im=cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
-with open('out.mem') as file:
+with open('result2.mem') as file:
 	hardImage= [line.split()[1] for line in file]
 
 hardImage = np.array(hardImage,np.uint8)

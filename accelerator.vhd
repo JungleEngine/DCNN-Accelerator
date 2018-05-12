@@ -90,7 +90,8 @@ entity accelerator is
   signal sig_vcc : std_logic:='1';
   signal sig_ground : std_logic:='0';
 
-  signal sig_buffer_output : std_logic_vector( 107 downto 0);
+  signal sig_buffer_output : std_logic_vector( 123 downto 0);
+  signal sig_buffer_input : std_logic_vector( 123 downto 0);
 
  
   -- all output
@@ -98,8 +99,8 @@ entity accelerator is
   -- Cascaded adders. 3*3
   -- adders.
   --r1
-
-sig_adder_stage_4_input <= sig_adder_stage3_output & "000" & sig_multiplier_output(15 downto 0);
+sig_buffer_input <=sig_multiplier_output(15 downto 0) & sig_adder_stage2_output;
+sig_adder_stage_4_input <= sig_adder_stage3_output & "000" & sig_buffer_output(123 downto 108);
 
 
 sig_multiplier_output <= 	(x"00")&window_row1(7 downto 0)&
@@ -139,11 +140,11 @@ sig_multiplier_output <= 	(x"00")&window_row1(7 downto 0)&
 						& sig_mul_output_r5);
 
 
-  	BUFF : ENTITY work.REG generic map(n=>108) PORT MAP (clk=>clk, 
+  	BUFF : ENTITY work.REG generic map(n=>124) PORT MAP (clk=>clk, 
   		EN => sig_vcc,
   		Q => sig_buffer_output,
   		RST => sig_ground,
-  		D => sig_adder_stage2_output);
+  		D => sig_buffer_input);
 
 testing_adders <= sig_mul_output_r1(79 downto 64) + sig_mul_output_r2(79 downto 64);
 -- STAGE 1 ---------------------------------------------------------------------
