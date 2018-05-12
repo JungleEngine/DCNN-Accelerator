@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 vsim -gui -t fs work.dcnn
 set StdArithNoWarnings 1
 set NumericStdNoWarnings 1
 mem load -i ramFilling/ram.mem /dcnn/ram/RAM
-=======
-vsim -gui work.dcnn
-mem load -i C:/altera/12.1sp1/modelsim_ase/VLSI/ram.mem /dcnn/ram/RAM
->>>>>>> 73c25e58cddae498c6ba80c419b0badd4d9c2520
 add wave -position end  sim:/dcnn/clk
 add wave -position end  sim:/dcnn/rst
 add wave -position end  sim:/dcnn/start

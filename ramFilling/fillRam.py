@@ -15,11 +15,11 @@ i=0
 #row 1
 print(str(i)+":",1)
 i=i+1
-print(str(i)+":",-1)
+print(str(i)+":",1)
 i=i+1
-print(str(i)+":",-1)
+print(str(i)+":",1)
 i=i+1
-print(str(i)+":",-1)
+print(str(i)+":",1)
 i=i+1
 print(str(i)+":",1)
 i=i+1
@@ -27,26 +27,27 @@ i=i+1
 #row 2
 print(str(i)+":",1)
 i=i+1
-print(str(i)+":",-1)
+print(str(i)+":",1)
 i=i+1
-print(str(i)+":",-1)
+print(str(i)+":",1)
 i=i+1
-print(str(i)+":",-1)
+print(str(i)+":",1)
 i=i+1
 print(str(i)+":",1)
 i=i+1
 
 #row 3
-print(str(i)+":",0)
+print(str(i)+":",1)
 i=i+1
-print(str(i)+":",0)
+print(str(i)+":",1)
 i=i+1
-print(str(i)+":",0)
+print(str(i)+":",2)
 i=i+1
-print(str(i)+":",0)
+print(str(i)+":",1)
 i=i+1
-print(str(i)+":",0)
+print(str(i)+":",1)
 i=i+1
+
 #row 4
 print(str(i)+":",1)
 i=i+1
@@ -58,6 +59,7 @@ print(str(i)+":",1)
 i=i+1
 print(str(i)+":",1)
 i=i+1
+
 #row 5
 print(str(i)+":",1)
 i=i+1
