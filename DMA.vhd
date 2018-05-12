@@ -38,8 +38,8 @@ SIGNAL INPUT_SIGNALS: std_logic_vector(2 DOWNTO 0);
 SIGNAL BUFFERED_SIGNALS: std_logic_vector(2 DOWNTO 0);
 SIGNAL BUFFERED_READ_FILTER: std_logic;
 SIGNAL BUFFERED_READ_WINDOW: std_logic;
-SIGNAL SIG_READ_FILTER: std_logic; 
-SIGNAL SIG_READ_WINDOW: std_logic; 
+SIGNAL SIG_READ_FILTER: std_logic := '0'; 
+SIGNAL SIG_READ_WINDOW: std_logic := '0'; 
 SIGNAL SIG_FILTER_ACK: std_logic;
 SIGNAL SIG_DATA_ACK: std_logic;
 
@@ -141,12 +141,12 @@ BEGIN
 				  SIG_DATA_ACK <= '1';
 				  SIG_FILTER_ACK <= '0';
 				ELSE 
-		      SIG_DATA_ACK <= '0';
+				SIG_DATA_ACK <= '0';
 			    SIG_FILTER_ACK <= '0';
 			  END IF;
 		  ELSE 
-		    SIG_DATA_ACK <= '0';
-			  SIG_FILTER_ACK <= '0';
+				SIG_DATA_ACK <= '0';
+				SIG_FILTER_ACK <= '0';
 		  END IF;
 	  END IF;
 	END PROCESS;

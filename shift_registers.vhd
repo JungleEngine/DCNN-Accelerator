@@ -26,6 +26,7 @@ signal sig_row1_out	: std_logic_vector(N-1 downto 0);
 signal sig_row2_out	: std_logic_vector(N-1 downto 0); 
 signal sig_row3_out	: std_logic_vector(N-1 downto 0); 
 signal sig_row4_out	: std_logic_vector(N-1 downto 0); 
+signal inv_clk : std_logic;
 
 begin
 	row0_out<=sig_row0_out;
@@ -33,39 +34,41 @@ begin
 	row2_out<=sig_row2_out;
 	row3_out<=sig_row3_out;
 	row4_out<=sig_row4_out;
-
+	
+	inv_clk <= not clk;
+	
 	Row0_Register: ENTITY work.Reg PORT MAP(
 		D 		=>data_in, 
 		EN 		=>shift,
-		CLK 	=>clk,
+		CLK 	=>inv_clk,
 		RST 	=>rst,
 		Q 		=>sig_row0_out
 		); 
 	Row1_Register: ENTITY work.Reg PORT MAP(
 		D 		=>sig_row0_out, 
 		EN 		=>shift,
-		CLK 	=>clk,
+		CLK 	=>inv_clk,
 		RST 	=>rst,
 		Q 		=>sig_row1_out
 		); 
 	Row2_Register: ENTITY work.Reg PORT MAP(
 		D 		=>sig_row1_out, 
 		EN 		=>shift,
-		CLK 	=>clk,
+		CLK 	=>inv_clk,
 		RST 	=>rst,
 		Q 		=>sig_row2_out
 		); 
 	Row3_Register: ENTITY work.Reg PORT MAP(
 		D 		=>sig_row2_out, 
 		EN 		=>shift,
-		CLK 	=>clk,
+		CLK 	=>inv_clk,
 		RST 	=>rst,
 		Q 		=>sig_row3_out
 		); 
 	Row4_Register: ENTITY work.Reg PORT MAP(
 		D 		=>sig_row3_out, 
 		EN 		=>shift,
-		CLK 	=>clk,
+		CLK 	=>inv_clk,
 		RST 	=>rst,
 		Q 		=>sig_row4_out
 		); 
